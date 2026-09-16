@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import InputForm from './components/InputForm.jsx';
-import ResultsDisplay from './components/ResultsDisplay.jsx';
-import { computeFullReport } from './logic/fullCalcs.js';
+import MeetingPlanner from './components/MeetingPlanner.jsx';
 
 const ACCESS_CODE = 'dbf123';
 const SESSION_KEY = 'sae_unlocked_until';
@@ -60,51 +58,6 @@ function LockScreen({ onUnlock }) {
 
 export default function App() {
   const [unlocked, setUnlocked] = useState(isSessionValid);
-  const [results, setResults] = useState(null);
-  const [error,   setError]   = useState(null);
-
   if (!unlocked) return <LockScreen onUnlock={() => setUnlocked(true)} />;
-
-  function handleCalculate(airfoilId, wingConfigId, tailId, wingspanM) {
-    try {
-      setResults(computeFullReport(airfoilId, wingConfigId, tailId, wingspanM));
-      setError(null);
-    } catch (e) {
-      setError(e.message);
-      setResults(null);
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-950 text-gray-100" style={{ fontFamily: 'system-ui, sans-serif' }}>
-      {results === null ? (
-        /* ── Input screen: vertically + horizontally centered ── */
-        <div className="min-h-screen flex flex-col items-center justify-center px-4">
-          <div className="w-full max-w-md">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-white tracking-tight">SAE Aero Calculator</h1>
-              <p className="text-sm text-gray-400 mt-1">
-                Set your wingspan — get payload capacity + full aircraft sizing. 15 ft combined span limit.
-              </p>
-            </div>
-
-            {error && (
-              <div className="mb-5 p-3 bg-red-950 border border-red-800 text-red-300 text-sm rounded">
-                Error: {error}
-              </div>
-            )}
-
-            <InputForm onCalculate={handleCalculate} />
-          </div>
-        </div>
-      ) : (
-        /* ── Results screen: centered column ── */
-        <div className="flex flex-col items-center px-4 py-10">
-          <div className="w-full max-w-3xl">
-            <ResultsDisplay results={results} onBack={() => setResults(null)} />
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return <MeetingPlanner />;
 }

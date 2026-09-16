@@ -9,7 +9,7 @@ import { calcBatteryWeight } from './logic/powerCalcs.js';
 
 const G = 9.81;
 const RHO = 1.225;
-const V_STALL_TARGET = 6.0; // m/s — comfortable hand/bungee launch limit
+const V_LAUNCH_MAX = 8.0; // m/s — SAE hand-launch ceiling; stall must stay at or below this
 const V_HT_TARGET = 0.45;    // target horizontal tail volume coefficient
 const V_VT_TARGET = 0.04;    // target vertical tail volume coefficient
 
@@ -50,7 +50,7 @@ export function autoSize({
 
   // Iterative solve: S depends on W_total, W_total depends on S (through wing/tail weight)
   const W_fixed = W_motor + W_battery + W_electronics + W_fuselage + payloadKg;
-  let S = (2 * W_fixed * G) / (RHO * CL_max_eff * V_STALL_TARGET ** 2);
+  let S = (2 * W_fixed * G) / (RHO * CL_max_eff * V_LAUNCH_MAX ** 2);
 
   for (let i = 0; i < 10; i++) {
     const c = S / b;
@@ -63,7 +63,7 @@ export function autoSize({
     const W_tail = (S_ht + S_vt) * material.densityKgM2 * 1.5;
 
     const W_total = W_wing + W_tail + W_fixed;
-    S = (2 * W_total * G) / (RHO * CL_max_eff * V_STALL_TARGET ** 2);
+    S = (2 * W_total * G) / (RHO * CL_max_eff * V_LAUNCH_MAX ** 2);
   }
 
   const c = Math.max(0.05, S / b);

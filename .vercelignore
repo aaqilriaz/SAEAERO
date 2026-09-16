@@ -1,0 +1,9 @@
+.tools/
+.claude/
+artifacts/
+docs/
+.env*
+*.pdf
+!public/*.pdf
+plan.md
+CLAUDE.md

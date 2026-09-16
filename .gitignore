@@ -51,3 +51,10 @@ desktop.ini
 # Logs
 *.log
 logs/
+
+.vercel
+.tools/
+artifacts/
+
+.vercel
+.env*
