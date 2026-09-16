@@ -194,9 +194,10 @@ export function evaluate(d) {
     feasible: checks.every(c => c.ok), rulesPass: checks.filter(c => c.kind === 'rule').every(c => c.ok) };
 }
 
-export function requiredStaticThrust(d) {
+export function requiredStaticThrust(d, { checkBattery = true } = {}) {
   // Inverse search keeps installed power, prop speed, density and mission fixed.
-  const relevant = ['Takeoff margin', 'Ground-roll model applicability', 'Cruise and turn thrust', 'Climb target', 'Battery energy', 'Battery current'];
+  const relevant = ['Takeoff margin', 'Ground-roll model applicability', 'Cruise and turn thrust', 'Climb target'];
+  if (checkBattery) relevant.push('Battery energy', 'Battery current');
   const passes = n => { const r = evaluate({ ...d, staticThrustN: n }); return r.valid && r.checks.filter(c => relevant.includes(c.name)).every(c => c.ok); };
   if (!passes(500)) return null;
   let lo = 0, hi = 500;

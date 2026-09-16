@@ -8,6 +8,12 @@ export const RULES = {
   emptyMinLb: 1, filledMinLb: 4, emptyPoints: 3, filledPoints: 11,
 };
 
+// Planning envelope, not manufacturer dimensions. Confirm against the actual bottle.
+// Keep the default gap small: 1 mm between bottles (not padding or wall thickness).
+export const BOTTLE_ESTIMATE = {
+  litres: 2, diameterIn: 4.4, lengthIn: 13, clearanceIn: 1 / 25.4,
+};
+
 export const FOILS = [
   { id: 'S1223', name: 'Selig S1223', cl: 2.1, tag: 'High lift',
     note: 'A high-lift candidate. A published 2D test reached Cl,max 2.2 at Re = 200,000; the 2.1 preset is a planning assumption. Check pitching moment, trim drag, surface accuracy and performance at your Reynolds number.',
@@ -27,7 +33,7 @@ export const DEFAULT_DESIGN = {
   spanIn: 94, rootChordIn: 18, taper: 1, planes: 1, lengthIn: 76,
   stallTarget: 10, sectionCl: 2.1, clFactor: 0.8, cd0: 0.045, oswald: 0.7,
   emptyBottles: 2, filledBottles: 2, emptyBottleLb: 1.05, filledBottleLb: 4.05,
-  bottleDiameterIn: 4.4, bottleLengthIn: 13, bottleClearanceIn: 0.2,
+  bottleDiameterIn: BOTTLE_ESTIMATE.diameterIn, bottleLengthIn: BOTTLE_ESTIMATE.lengthIn, bottleClearanceIn: BOTTLE_ESTIMATE.clearanceIn,
   bayLengthIn: 28, bayWidthIn: 10, bayHeightIn: 6,
   densityAltitudeFt: 1500, temperatureC: 25, cruiseMps: 18, bankDeg: 25,
   motorCount: 2, propDiameterIn: 12, propsPerMotor: 1, driveRatio: 1,

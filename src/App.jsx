@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MeetingPlanner from './components/MeetingPlanner.jsx';
+import Calculator from './components/Calculator.jsx';
 
 const ACCESS_CODE = 'dbf123';
 const SESSION_KEY = 'sae_unlocked_until';
@@ -37,6 +37,7 @@ function LockScreen({ onUnlock }) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input
             type="password"
+            aria-label="Access code"
             value={input}
             onChange={e => { setInput(e.target.value); setFailed(false); }}
             placeholder="Access code"
@@ -59,5 +60,5 @@ function LockScreen({ onUnlock }) {
 export default function App() {
   const [unlocked, setUnlocked] = useState(isSessionValid);
   if (!unlocked) return <LockScreen onUnlock={() => setUnlocked(true)} />;
-  return <MeetingPlanner />;
+  return <Calculator />;
 }

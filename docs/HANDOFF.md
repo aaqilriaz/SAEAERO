@@ -1,6 +1,16 @@
 ﻿# Handoff — SAE Aero Design 2027 calculator
 
-Updated 2026-09-16 21:25 UTC. The requested redesign is DEPLOYED and verified.
+Updated 2026-09-16: the new dark Basic / Advanced redesign is verified locally and prepared for GitHub. The deployment details below describe the previous release; the new live deployment has not been verified.
+
+## Basic / Advanced update
+
+- Entry point is now `Calculator.jsx`; Basic starts by default with five inputs: light bottles, filled bottles, wingspan, empty aircraft weight, and propeller diameter.
+- Basic assumes two motors, a 4S 2200 mAh battery, estimated 2 L bottles (13 × 4.4 inches), and 1 mm between bottles. Prop diameter is editable up to 12 inches. These hardware choices follow the user's instructions.
+- `basicCalcs.js` solves wing area and cargo envelope, then inverse static thrust at the stated 900 W limit. The target adds 15% and rounds up to 0.1 kgf per motor. Energy/current checks remain separate; no suitable thrust solution is shown explicitly.
+- Prop diameter controls the rules check and drawing, not an unmeasured propeller's actual performance. The thrust curve remains an assumption. Bottle weights are scoring targets including ballast, not a water-volume conversion.
+- Basic and Advanced preserve separate drafts. Customize copies the current estimate, freezes its solved wing geometry, and opens the existing advanced tools. Existing scenarios and rulebook access remain available.
+- Verification: 309 tests in 10 files pass; production build passes. Chromium checks cover all five inputs, boundary/invalid values, large-load failure, downloads, mode persistence, advanced tabs, reload, the rulebook, and 390/320 px mobile layouts without overflow or page errors.
+- Read the full supplied 57-page rulebook, all source modules, and all tests before editing. The duplicate untracked root PDF is not part of this change.
 
 ## Production
 - Public URL: https://sae-aero-calculator.vercel.app
